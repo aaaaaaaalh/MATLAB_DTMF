@@ -13,7 +13,7 @@ cd('E:\MATLAB_DTMF');
 DTMF_App;
 ```
 
-**第二阶段验收通过（2026-10-23）。** 用户在 MATLAB R2025b 中确认 GUI 启动、号码输入、删除、确认、WAV 导入导出及自动识别正常，`run_phase2_checks` 全部通过；本地结果 CSV 为 37/37 通过。此结果来自用户实际运行，Codex 本次未启动 MATLAB。操作见 `docs/gui_guide.md`，记录见 `docs/phase2_acceptance.md`。
+**Pixel DSP Lab 像素 GUI 已完成并正式发布 v0.3.0。** 用户最新在本机 MATLAB R2025b 25.2.0.2998904（Signal Processing Toolbox R2025b）实际运行 `run_tests`、`run_phase2_checks` 和 `DTMF_App`：核心 21/21，完整第二阶段 37/37，失败 0、未完成 0，且确认视觉效果满意。37 项已包含 21 项核心测试，不重复累计。此处为用户本机验证结果；Codex 的独立运行记录另见验收文档。操作见 `docs/gui_guide.md`，验收见 `docs/pixel_gui_validation.md`，版本变更见 `CHANGELOG.md`。
 
 GUI 默认按键试听开启；数字键追加号码，`*` 删除末位及音频，`#` 确认并 FFT 识别。左侧可切换指导书模式。右侧下拉框或识别明细表可选择按键片段，波形用红色虚线显示选定区间，频谱标出双频峰。
 
