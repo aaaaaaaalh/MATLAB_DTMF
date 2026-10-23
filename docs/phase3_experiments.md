@@ -11,7 +11,7 @@
 - 标签 `v0.3.0`，说明 `Pixel DSP Lab — Colorful Pixel GUI Release`，已推送并核对远程指向。
 - 发布页：https://github.com/aaaaaaaalh/MATLAB_DTMF/releases/tag/v0.3.0
 
-综合实验入口作为 GUI 发布后的独立提交维护；v0.3.0 不移动。未重复创建仓库、强制推送或覆盖已有标签。
+本轮补充在 `feat/phase3-experiments` 独立分支开展，不合并 main。原入口已在上一轮提交到 main，保留既有历史；v0.3.0 不移动。未重复创建仓库、强制推送或覆盖已有标签。
 
 ## 复现和指标
 
@@ -39,7 +39,7 @@ results = run_phase3_experiments;
 | C 时间参数 | 7 种持续时间 × 4 种间隔 + 1000/100 点基准，每组 5 号码 | 145 次，92 次完全正确，53 次失败；详细条件见下文 |
 | D 抗噪 | 两模式；无噪声及 30/20/15/10/5/0 dB；共 366 次 | 61 条实际失败，详细见下表 |
 | E 采样率 | 8000/16000/44100/48000 Hz × 单/双声道 × 3 号码 | 24/24 完全正确；全部读取为 8192 Hz 单声道 |
-| F 异常 | 8 个正常拒绝/错误提示场景 | 8/8 符合预期 |
+| F 异常 | 10 个正常拒绝/错误提示场景 | 10/10 符合预期 |
 
 C 的持续时间为 20、30、40、60、120、200、300 ms，间隔为 0、10、30、100 ms，CSV 同时保存实际取整后的采样点数。20/30 ms 用于底层压力实验，不改变 GUI 原有最小 40 ms 限制。
 
@@ -58,17 +58,17 @@ C 的持续时间为 20、30、40、60、120、200、300 ms，间隔为 0、10�
 
 具体错误示例：基准模式 5 dB、第 3 次噪声试验，`0123456789` 识别成 `0123?6789`，编辑距离 2，含“组内峰值显著性不足”拒绝原因。0 dB 默认模式产生大量多余片段，总编辑距离 504 / 290 参考字符，原始错误率 173.7931%，未隐去插入错误。全部 114 条失败（C 53、D 61）保存在 recognition_errors.csv。
 
-F 包含：静音与空序列返回空结果；128 点单音返回 ? / rejected；无效字符、不可读文本格式、空 WAV 导出、空会话识别、NaN 音频返回相应异常。文件格式试验是实际不支持的文本内容，不宣称底层 audioread 会拒绝所有非 WAV 编码。
+F 包含：1000 Hz 单频音和 600/1700 Hz 非标准双频音经实际 WAV 写入/读取后，单音判决为 rejected、连续识别为 ?，未误报有效按键；静音与空序列返回空结果；128 点单音返回 ? / rejected；无效字符、不可读文本格式、空 WAV 导出、空会话识别、NaN 音频返回相应异常。文件格式试验是实际不支持的文本内容，不宣称底层 audioread 会拒绝所有非 WAV 编码。
 
 ## 数据与图像
 
-最终运行编号：`20261023_080841_381`（UTC）。
+最终运行编号：`20261023_081336_674`（UTC）。
 
-- 数据：`outputs/results/phase3/20261023_080841_381/`
-- 图片：`outputs/figures/phase3/20261023_080841_381/`
+- 数据：`outputs/results/phase3/20261023_081336_674/`
+- 图片：`outputs/figures/phase3/20261023_081336_674/`
 - 最新完成运行索引：`outputs/results/phase3/latest.json`
 
-CSV 包含 A_frequency、B_sequences/B_summary、C_timing_trials/C_timing_summary、D_noise_trials/D_noise_summary、E_sample_rates/E_summary、F_exceptions、recognition_errors。`config.json` 保存配置，`phase3_results.mat` 保存全部表格和配置，`digit8_data.mat` 保存典型波形/频谱，`wav/` 保存 24 个采样率验证文件。数字字符串可能有前导零，若用 Excel 打开 CSV，应把 Expected/Recognized 列设为文本；MAT 保留原始 string 类型。
+CSV 包含 A_frequency、B_sequences/B_summary、C_timing_trials/C_timing_summary、D_noise_trials/D_noise_summary、E_sample_rates/E_summary、F_exceptions、recognition_errors。`config.json` 保存配置，`phase3_results.mat` 保存全部表格和配置，`digit8_data.mat` 保存典型波形/频谱，`wav/` 保存 24 个采样率验证文件及 2 个非标准音频文件。数字字符串可能有前导零，若用 Excel 打开 CSV，应把 Expected/Recognized 列设为文本；MAT 保留原始 string 类型。
 
 七张 PNG 均使用 300 dpi、中文标题和坐标，已目视检查：
 
@@ -80,7 +80,7 @@ CSV 包含 A_frequency、B_sequences/B_summary、C_timing_trials/C_timing_summar
 6. `06_timing_accuracy.png`：持续时间、间隔与基准模式对比。
 7. `07_sample_rate_accuracy.png`：不同输入采样率识别对比。
 
-两次相同种子的全量运行已比较全部 CSV，内容哈希完全一致；图表排版调整未改变实验数据。静态分析无诊断。运行记录与生成物按既有忽略规则本地保留，不上传日志、批量 WAV 或大型结果文件；仓库发布可复现的脚本和本验收记录。
+此前相同种子的全量运行已比较全部 CSV，内容哈希完全一致。本轮新增两项 F 场景后重跑 A～F，A～E 及错误总表与此前内容哈希一致；F 表按实际结果扩展到 10 项。静态分析无诊断。运行记录与生成物按既有忽略规则本地保留，不上传日志、批量 WAV 或大型结果文件；仓库发布可复现的脚本和本验收记录。
 
 ## 未通过/未运行与正式报告材料
 

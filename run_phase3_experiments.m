@@ -200,9 +200,11 @@ end
 end
 
 function t=exceptionChecks(out)
-names=["纯静音序列","空音频序列","过短单音","无效字符","不支持的文本文件","空音频导出","空会话识别","非有限音频"];
+names=["纯静音序列","空音频序列","过短单音","无效字符","不支持的文本文件","空音频导出","空会话识别","非有限音频", ...
+    "非标准单频音","非标准双频音"];
 expected=["空号码且无片段","空号码且无片段","? / rejected", ...
-    "dtmf:InvalidKey","MATLAB audioread 格式错误","dtmf:EmptyAudio","dtmf:EmptyAudio","有限数值校验异常"];
+    "dtmf:InvalidKey","MATLAB audioread 格式错误","dtmf:EmptyAudio","dtmf:EmptyAudio","有限数值校验异常", ...
+    "单音 rejected；序列不输出有效按键","双音 rejected；序列不输出有效按键"];
 rows=cell(numel(names),1);
 badfile=fullfile(out,'unsupported_input.txt'); fid=fopen(badfile,'w');
 assert(fid>=0,'Cannot create unsupported format fixture'); fprintf(fid,'Not an audio file.'); fclose(fid);
@@ -224,8 +226,22 @@ for k=1:numel(names)
             case 6, dtmfWriteWav(fullfile(out,'empty.wav'),zeros(0,1));
             case 7, session=DtmfSession; session.recognize;
             case 8, dtmfRecognizeSequence([0;NaN;0]);
+            case {9,10}
+                time=(0:2457)'/8192;
+                if k==9
+                    signal=0.45*sin(2*pi*1000*time);
+                else
+                    signal=0.30*(sin(2*pi*600*time)+sin(2*pi*1700*time));
+                end
+                file=fullfile(out,'wav',sprintf('nonstandard_case%d.wav',k));
+                audiowrite(file,signal,8192,'BitsPerSample',16);
+                audio=dtmfReadWav(file);
+                tone=dtmfRecognizeTone(audio.signal);
+                sequence=dtmfRecognizeSequence(audio.signal);
+                passed=tone.status=="rejected" && all(char(sequence.keys)=='?');
+                observed="tone="+tone.key+" / "+tone.status+" / "+tone.reason+"; sequence="+sequence.keys;
         end
-        if k>=4, observed="未抛出异常"; end
+        if k>=4 && k<=8, observed="未抛出异常"; end
     catch exception
         observed=string(exception.message); identifier=string(exception.identifier);
         switch k

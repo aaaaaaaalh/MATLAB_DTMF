@@ -86,6 +86,8 @@ tools_run_validation.ps1
 
 ## 第三阶段综合实验
 
+本轮实验补充在 `feat/phase3-experiments` 独立开发分支，保留既有 main 历史与 v0.3.0 稳定标签。异常检查包括非标准单频及双频 WAV，实际结果见第三阶段验收记录。
+
 在工程根目录执行：
 
 ```matlab

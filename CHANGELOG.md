@@ -14,6 +14,7 @@ Pixel DSP Lab — Colorful Pixel GUI Release
 
 - `038ed79` 已引入独立可复现的第三阶段 A～F 性能实验入口；该历史提交保留。
 - 本轮第三阶段实验补充在 `feat/phase3-experiments` 分支开展，v0.3.0 标签保持不变。
+- 新增 1000 Hz 单频音、600/1700 Hz 非标准双频音的 WAV 往返与拒绝检查；本轮 A～F 已实际运行，异常场景 10/10 符合预期。
 - 数据、配置与错误案例保存在 `outputs/results/phase3/`，报告图保存在 `outputs/figures/phase3/`；不公开上传日志或批量生成文件。
 
 ## v0.2.0 — 2026-10-23

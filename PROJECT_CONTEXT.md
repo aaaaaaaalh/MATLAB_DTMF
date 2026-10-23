@@ -4,7 +4,7 @@
 
 用户已确认 Pixel DSP Lab 新版视觉效果满意。Codex 在 MATLAB R2025b 实际重跑 run_tests（21/21）和 run_phase2_checks（37/37）后，将 GUI 分支快进合并 main，发布并推送 v0.3.0（7d3d39a506509b67b7b01e4b8aadbf88e6415420）。v0.2.0 保留为美化前基线。核心 DSP、会话逻辑和原测试均未改变。
 
-第三阶段独立入口 run_phase3_experiments 已实际运行 A～F，最终运行编号 20261023_080841_381，详见 docs/phase3_experiments.md。12 键、23 组无噪连续号码、24 组输入采样率组合均正确；时间参数和噪声压力条件的 114 条识别失败如实保留；8 项异常行为符合预期。配置、CSV、MAT、24 个 WAV 和七张 300 dpi 图片位于 outputs 子目录，latest.json 指向最新完成运行。生成物与日志仅本地保留。真实声卡可选检查未运行，尚未开始正式 Word 报告。
+第三阶段本轮补充在 feat/phase3-experiments 独立分支开展，保持 v0.3.0 标签不变。入口 run_phase3_experiments 已实际运行 A～F，最终运行编号 20261023_081336_674，详见 docs/phase3_experiments.md。12 键、23 组无噪连续号码、24 组输入采样率组合均正确；时间参数和噪声压力条件的 114 条识别失败如实保留；10 项异常行为符合预期（含非标准单频/双频音）。配置、CSV、MAT、26 个 WAV 和七张 300 dpi 图片位于 outputs 子目录，latest.json 指向最新完成运行。生成物与日志仅本地保留。真实声卡可选检查未运行，尚未开始正式 Word 报告。
 
 ## 历史开发记录
 
