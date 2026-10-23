@@ -7,7 +7,11 @@ cd('E:\MATLAB_DTMF');
 DTMF_App;
 ```
 
-界面使用 uifigure、uigridlayout、uibutton、uiaxes 与 uitable；灰色面板、蓝色波形、中文标签。优先微软雅黑，候选字体包含黑体和 Noto CJK。小窗口启用滚动，不强行挤压控件。没有修改 MATLAB 全局字体设置。
+当前视觉分支为 Pixel DSP Lab：使用 uifigure、uigridlayout、uibutton、uiaxes 与 uitable；浅紫标题栏、白色面板、浅蓝拨号键、珊瑚删除键和绿色确认键。时域曲线为深蓝，FFT 为紫色，检测峰与选段边界为砖红色。仅标题旁使用九宫格像素装饰，不依赖 HTML/CSS 或外部框架。
+
+主题集中在 `gui/dtmfPixelTheme.m`。中文优先已安装的微软雅黑或 Noto CJK 等字体；英文标题和数字优先已安装像素字体，否则使用 Cascadia Mono、Consolas 等等宽字体。最终回退到 MATLAB 系统默认字体，不下载字体，也不修改 MATLAB 全局字体设置。
+
+顶部显示品牌、采样率、FFT 点数与状态；左侧为拨号和参数控制，右侧依次为时域、FFT 和识别/WAV 区。识别表格保留八列与行选择交互；较长结果可在只读号码框内水平查看，明细可在表格内滚动。小窗口启用外层横纵滚动，不强行缩小控件。颜色仅辅助提示，判决文字与错误对话框始终保留。视觉验证记录见 `pixel_gui_validation.md`。
 
 ## 基本操作
 
