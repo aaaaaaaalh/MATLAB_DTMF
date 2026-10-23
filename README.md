@@ -1,4 +1,4 @@
-# MATLAB DTMF 电话拨号音实验
+# Pixel DSP Lab — MATLAB DTMF 电话拨号音实验
 
 纯 `.m` 文件实现的 DTMF 实验系统：独立 DSP 核心、原生 MATLAB GUI、WAV 往返演示与自动测试。目标环境 MATLAB R2025b，重采样需要 Signal Processing Toolbox。不包含最终实验报告。
 
@@ -82,6 +82,18 @@ tools_run_validation.ps1
 
 底层音调映射及合成支持全部 `0~9*#`。GUI 默认拨号编辑器只追加数字：`*` 删除最后一位及其音频，`#` 确认而不追加音调。GUI 状态与标准 DTMF 映射分开实现。
 
-稳定版本标签：`v0.2.0`，用于 GUI 视觉改版前的功能基线。源代码、测试、文档及测试依赖的演示 WAV 纳入版本管理；本地运行日志、缓存及 outputs 生成结果不上传。
+稳定版本标签：`v0.2.0` 为 GUI 视觉改版前基线，`v0.3.0` 为已验收的 Pixel DSP Lab 彩色像素 GUI 版本。源代码、测试、文档及测试依赖的演示 WAV 纳入版本管理；本地运行日志、缓存及 outputs 生成结果不上传。
+
+## 第三阶段综合实验
+
+在工程根目录执行：
+
+```matlab
+results = run_phase3_experiments;
+```
+
+独立运行 12 键频率、连续号码、拨号时间、AWGN 抗噪、输入采样率与异常输入六组实验。固定随机种子，保留逐次实际错误，生成七张 300 dpi 中文图表；不改动 DSP 核心或原有测试。
+
+数据与配置保存至 `outputs/results/phase3/<UTC运行编号>/`，图片保存至 `outputs/figures/phase3/<UTC运行编号>/`。`outputs/results/phase3/latest.json` 指向最新完成运行。复现方法、指标定义和本阶段真实结果见 [第三阶段验收记录](docs/phase3_experiments.md)。
 
 公开前人工检查个人信息。含姓名、学号的原始实验报告只放在忽略的 `report/private/`，不加入仓库。忽略规则不能替代公开前审查。
